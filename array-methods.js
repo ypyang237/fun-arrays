@@ -138,7 +138,7 @@ var result = {};
 
   for (var i in result) {
     if (result[i] > 50000) {
-      console.log(result[i]);
+      //console.log(result[i]);
 
     sumOfHighInterests += result[i] ;
     }
@@ -154,7 +154,7 @@ sumOfHighInterests = 0.03 + (Math.round(sumOfHighInterests * 100))/100;
     and the value is the sum of all amounts from that state
       the value must be rounded to the nearest cent
  */
-console.log(dataset.bankBalances);
+
  var stateSums = {};
 
 dataset.bankBalances.forEach(function(element, index, array) {
@@ -175,7 +175,34 @@ dataset.bankBalances.forEach(function(element, index, array) {
   where the sum of amounts in the state is
     less than 1,000,000
  */
-var lowerSumStates = null;
+var allSums = {};
+
+dataset.bankBalances.forEach(function(element, index, array) {
+  if(allSums[element.state] === undefined) {
+    allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
+  } else {
+    allSums[element.state] += (Math.round(Number(element.amount)*100))/100;
+  }
+});
+
+//console.log('HEHEHE', allSums);
+var lowerSumStates = [];
+
+for (var k in allSums) {
+  if (allSums[k] < 1000000) {
+    //console.log(typeof k);
+    console.log('HERE', allSums[k]);
+    console.log('states!', k);
+
+    lowerSumStates.push(k);
+  }
+}
+
+
+console.log('LOWER', lowerSumStates);
+
+
+
 
 /*
   set higherStateSums to be the sum of
