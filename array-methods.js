@@ -233,7 +233,7 @@ var selectedStates = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
 
 var allSums = {};
 
-
+function ABC() {
 dataset.bankBalances.forEach(function(element, index, array){
   if (allSums[element.state] === undefined) {
     allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
@@ -242,17 +242,24 @@ dataset.bankBalances.forEach(function(element, index, array){
   }
 });
 
-
-
   for (var j in allSums) {
     if (selectedStates.indexOf(j)!== -1) {
-      console.log('YOHOO', j, allSums[j]);
+      //console.log('WHATTTT', allSums[j], j);
+
       if(allSums[j] > 2550000) {
-        areStatesInHigherStateSum = true;
+        console.log('WHATTTT', allSums[j], j);
+        return true;
       }
-    }
   }
- var areStatesInHigherStateSum = false;
+  else {
+    return false;
+  }
+}
+}
+
+
+  var areStatesInHigherStateSum = dataset.bankBalances.every(ABC);
+  //dataset.bankBalances.every(ABC);
 
 /*
   set anyStatesInHigherStateSum to be true if
@@ -271,7 +278,7 @@ var selectedStates = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
 
 var allSums = {};
 
-function ABC(){
+function myFunc(){
 dataset.bankBalances.forEach(function(element, index, array){
   if (allSums[element.state] === undefined) {
     allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
@@ -282,7 +289,6 @@ dataset.bankBalances.forEach(function(element, index, array){
 
   for (var j in allSums) {
     if (selectedStates.indexOf(j)!== -1) {
-      console.log('YOHOO', j, allSums[j]);
       if(allSums[j] > 2550000) {
         return true;
       }
@@ -290,7 +296,7 @@ dataset.bankBalances.forEach(function(element, index, array){
   }
 }
 
-  var anyStatesInHigherStateSum = dataset.bankBalances.some(ABC);
+  var anyStatesInHigherStateSum = dataset.bankBalances.some(myFunc);
 
 
 module.exports = {
