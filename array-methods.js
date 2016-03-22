@@ -185,24 +185,13 @@ dataset.bankBalances.forEach(function(element, index, array) {
   }
 });
 
-//console.log('HEHEHE', allSums);
 var lowerSumStates = [];
 
 for (var k in allSums) {
   if (allSums[k] < 1000000) {
-    //console.log(typeof k);
-    console.log('HERE', allSums[k]);
-    console.log('states!', k);
-
     lowerSumStates.push(k);
   }
 }
-
-
-console.log('LOWER', lowerSumStates);
-
-
-
 
 /*
   set higherStateSums to be the sum of
@@ -210,7 +199,22 @@ console.log('LOWER', lowerSumStates);
     where the sum of amounts in the state is
       greater than 1,000,000
  */
-var higherStateSums = null;
+var higherStateSums = 0;
+var allSums = {};
+
+dataset.bankBalances.forEach(function(element, index, array){
+  if (allSums[element.state] === undefined) {
+    allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
+  } else {
+    allSums[element.state] += (Math.round(Number(element.amount)*100))/100;
+  }
+});
+
+  for(var i in allSums) {
+    if(allSums[i] > 1000000) {
+      higherStateSums += allSums[i];
+    }
+  }
 
 /*
   set areStatesInHigherStateSum to be true if
@@ -224,7 +228,31 @@ var higherStateSums = null;
     Delaware
   false otherwise
  */
-var areStatesInHigherStateSum = null;
+
+var selectedStates = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
+
+var allSums = {};
+
+
+dataset.bankBalances.forEach(function(element, index, array){
+  if (allSums[element.state] === undefined) {
+    allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
+  } else {
+    allSums[element.state] += (Math.round(Number(element.amount)*100))/100;
+  }
+});
+
+
+
+  for (var j in allSums) {
+    if (selectedStates.indexOf(j)!== -1) {
+      console.log('YOHOO', j, allSums[j]);
+      if(allSums[j] > 2550000) {
+        areStatesInHigherStateSum = true;
+      }
+    }
+  }
+ var areStatesInHigherStateSum = false;
 
 /*
   set anyStatesInHigherStateSum to be true if
@@ -238,7 +266,31 @@ var areStatesInHigherStateSum = null;
     Delaware
   false otherwise
  */
-var anyStatesInHigherStateSum = null;
+
+var selectedStates = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
+
+var allSums = {};
+
+function ABC(){
+dataset.bankBalances.forEach(function(element, index, array){
+  if (allSums[element.state] === undefined) {
+    allSums[element.state] = (Math.round(Number(element.amount)*100))/100;
+  } else {
+    allSums[element.state] += (Math.round(Number(element.amount)*100))/100;
+  }
+});
+
+  for (var j in allSums) {
+    if (selectedStates.indexOf(j)!== -1) {
+      console.log('YOHOO', j, allSums[j]);
+      if(allSums[j] > 2550000) {
+        return true;
+      }
+    }
+  }
+}
+
+  var anyStatesInHigherStateSum = dataset.bankBalances.some(ABC);
 
 
 module.exports = {
